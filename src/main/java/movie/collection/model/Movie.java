@@ -31,7 +31,7 @@ public class Movie {
     private int releaseYear;
 
     private int duration;
-
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Enumerated(EnumType.STRING)
