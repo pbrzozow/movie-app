@@ -9,20 +9,17 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!-- Enable Component Scanning -->
     <context:component-scan base-package="movie.collection"/>
 
-    <!-- Enable Spring MVC -->
     <mvc:annotation-driven/>
 
     <!-- Static Resources (CSS, JS, Images) -->
-    <mvc:resources mapping="/static/**" location="/resources/static/"/>
+    <mvc:resources mapping="/static/**" location="resources/static/"/>
 
-    <!-- Thymeleaf Configuration -->
     <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine"/>
         <property name="order" value="1"/>
-<!--        <property name="viewNames" value="*.html"/>-->
+        <!--        <property name="viewNames" value="*.html"/>-->
     </bean>
 
     <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
