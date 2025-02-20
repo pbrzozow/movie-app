@@ -1,14 +1,14 @@
 package movie.collection.model;
 
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "ratings", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "movie_id"}))
-
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,11 +1,11 @@
 package movie.collection.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "movie")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class Movie {
 
     private String title;
 
-    private Double rating;
+    private Double rating=0.0;
 
     @Column(name = "watched_times")
     private int watchedTimes = 0;
