@@ -1,9 +1,7 @@
 package movie.collection.service;
 
-import movie.collection.dto.CommentDto;
 import movie.collection.dto.MovieDto;
 import movie.collection.dto.MovieSummary;
-import movie.collection.dto.UserDto;
 import movie.collection.exception.MovieNotFoundException;
 import movie.collection.model.*;
 import movie.collection.repository.MovieRepository;
@@ -23,7 +21,6 @@ public class MovieService {
     }
 
     public Page<MovieSummary> listMovies(int pageNo) {
-        initialize();
         Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
         return movieRepository.findAllMovieSummaries(pageable);
     }
@@ -50,18 +47,8 @@ public class MovieService {
                 .build();
     }
 
-    private CommentDto commentToDto(Comment comment) {
-        UserDto userDto=userToDto(comment.getUser());
-        return new CommentDto(comment.getDate(),userDto, comment.getText());
 
-    }
-
-    private UserDto userToDto(User user) {
-        return new UserDto(user.getUsername());
-    }
-
-
-    void initialize(){
+    public void initialize(){
         Movie theGodfather = Movie.builder().icon("https://th.bing.com/th/id/OIP.3C9P6X2vrW-EGjNpsSMgyQHaK9?rs=1&pid=ImgDetMain")
                 .title("The godfather")
                 .rating(5.0)

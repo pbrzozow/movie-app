@@ -1,3 +1,3 @@
 package movie.collection.dto;
 
-public record UserDto(String username){}
+public record UserDto(Long id,String username){}
