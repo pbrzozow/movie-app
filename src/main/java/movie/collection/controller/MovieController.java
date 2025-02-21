@@ -33,6 +33,7 @@ public class MovieController {
     public String findMovieById(Model model,@PathVariable String id){
         MovieDto movieDto = movieService.findMovieById(id);
         model.addAttribute("movie",movieDto);
+        model.addAttribute("comments",movieDto.getComments());
         return "show-movie";
     }
 

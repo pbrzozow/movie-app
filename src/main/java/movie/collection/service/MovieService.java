@@ -5,22 +5,17 @@ import movie.collection.dto.MovieDto;
 import movie.collection.dto.MovieSummary;
 import movie.collection.dto.UserDto;
 import movie.collection.exception.MovieNotFoundException;
-import movie.collection.model.Category;
-import movie.collection.model.Comment;
-import movie.collection.model.Movie;
-import movie.collection.model.User;
+import movie.collection.model.*;
 import movie.collection.repository.MovieRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 
 @Service
 public class MovieService {
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
     private static final int PAGE_SIZE = 30;
 
     public MovieService(MovieRepository movieRepository) {
@@ -33,15 +28,15 @@ public class MovieService {
         return movieRepository.findAllMovieSummaries(pageable);
     }
 
-    public MovieDto findMovieById(String id){
+    public MovieDto findMovieById(String id) throws MovieNotFoundException{
         long movieId = Long.parseLong(id);
-        Optional<Movie> movieById = movieRepository.findMovieById(movieId);
-        Movie movie = movieById.orElseThrow(() -> new MovieNotFoundException("Movie do not exists!"));
+        Movie movie= movieRepository.findMovieWithComments(movieId);
+        if (movie==null){throw new MovieNotFoundException("Movie does not exists!");}
         return movieToDto(movie);
     }
 
     private MovieDto movieToDto(Movie movie) {
-        MovieDto movieDto = MovieDto.builder()
+        return MovieDto.builder()
                 .id(movie.getId())
                 .icon(movie.getIcon())
                 .title(movie.getTitle())
@@ -53,7 +48,6 @@ public class MovieService {
                 .rating(movie.getRating())
                 .comments(movie.getComments().stream().map(this::commentToDto).toList())
                 .build();
-        return movieDto;
     }
 
     private CommentDto commentToDto(Comment comment) {

@@ -1,5 +1,7 @@
 package movie.collection.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,6 +11,8 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "comments")
 public class Comment {
     @Id
