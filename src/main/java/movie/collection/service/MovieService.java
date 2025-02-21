@@ -3,6 +3,7 @@ package movie.collection.service;
 import movie.collection.dto.MovieDto;
 import movie.collection.dto.MovieSummary;
 import movie.collection.exception.MovieNotFoundException;
+import movie.collection.mapper.MovieMapper;
 import movie.collection.model.*;
 import movie.collection.repository.MovieRepository;
 import org.springframework.data.domain.Page;
@@ -13,11 +14,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MovieService {
-    private final MovieRepository movieRepository;
     private static final int PAGE_SIZE = 30;
 
-    public MovieService(MovieRepository movieRepository) {
+    private final MovieRepository movieRepository;
+    private final MovieMapper movieMapper;
+
+    public MovieService(MovieRepository movieRepository, MovieMapper movieMapper) {
         this.movieRepository = movieRepository;
+        this.movieMapper = movieMapper;
     }
 
     public Page<MovieSummary> listMovies(int pageNo) {
@@ -29,23 +33,9 @@ public class MovieService {
         long movieId = Long.parseLong(id);
         Movie movie= movieRepository.findMovieWithComments(movieId);
         if (movie==null){throw new MovieNotFoundException("Movie does not exists!");}
-        return movieToDto(movie);
+        return movieMapper.entityToDto(movie);
     }
 
-    private MovieDto movieToDto(Movie movie) {
-        return MovieDto.builder()
-                .id(movie.getId())
-                .icon(movie.getIcon())
-                .title(movie.getTitle())
-                .duration(movie.getDuration())
-                .description(movie.getDescription())
-                .releaseYear(movie.getReleaseYear())
-                .category(movie.getCategory().name())
-                .watchedTimes(movie.getWatchedTimes())
-                .rating(movie.getRating())
-                .comments(movie.getComments().stream().map(this::commentToDto).toList())
-                .build();
-    }
 
 
     public void initialize(){

@@ -13,7 +13,7 @@ public class MovieMapper {
     }
 
 
-    private MovieDto entityToDto(Movie movie) {
+    public MovieDto entityToDto(Movie movie) {
         return MovieDto.builder()
                 .id(movie.getId())
                 .icon(movie.getIcon())
