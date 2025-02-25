@@ -1,4 +1,14 @@
 package movie.collection.dto;
 
-public record CreateUserDto(String username, String password, String email) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class CreateUserDto {
+    private String username;
+    private String email;
+    private String password;
 }
