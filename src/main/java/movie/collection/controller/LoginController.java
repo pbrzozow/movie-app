@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class AuthController {
+public class LoginController {
     private final AuthenticationManager authManager;
 
-    public AuthController( AuthenticationManager authManager) {
+    public LoginController(AuthenticationManager authManager) {
         this.authManager = authManager;
     }
 
