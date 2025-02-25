@@ -16,12 +16,17 @@ public class ConfirmationTokenService {
     public ConfirmationTokenService(ConfirmationTokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;
     }
-    public ConfirmationToken generate(User user){
+
+    public ConfirmationToken createToken(User user) {
+        ConfirmationToken token = generate(user);
+        return saveToken(token);
+    }
+
+    private ConfirmationToken generate(User user){
         String token = UUID.randomUUID().toString();
         return new ConfirmationToken(token,user);
     }
-
-    public ConfirmationToken saveToken(ConfirmationToken confirmationToken){
+    private ConfirmationToken saveToken(ConfirmationToken confirmationToken){
         return tokenRepository.save(confirmationToken);
     }
     public ConfirmationToken getToken(String token) throws TokenNotFoundException {
