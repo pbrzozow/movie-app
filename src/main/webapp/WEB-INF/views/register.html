@@ -34,6 +34,10 @@
                                 <label for="floatingPassword">Password</label>
                             </div>
 
+                            <div th:if="${param.error}" class="alert alert-danger">
+                                An error occurred during user registration.
+                            </div>
+
                             <div class="d-grid">
                                 <button class="btn btn-primary text-uppercase fw-bold" type="submit"
                                         style="--bs-btn-padding-y: .45rem; --bs-btn-padding-x: 1.2rem; --bs-btn-font-size: 1rem;">

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
+
 @Controller
 public class RegistrationController {
     private final RegistrationService registrationService;
@@ -27,8 +29,11 @@ public class RegistrationController {
     @PostMapping("/register")
     public String createUser(@ModelAttribute("user") CreateUserDto user, Model model){
         System.out.println(user.toString());
-        String token = registrationService.registerUser(user);
-        System.out.println("Token: "+token);
+        try {
+            String token = registrationService.registerUser(user);
+        } catch (MessagingException e) {
+            return "redirect:/register?error";
+        }
         return "redirect:/login";
     }
     @GetMapping("/confirm")

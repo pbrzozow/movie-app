@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.mail.MessagingException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +27,8 @@ public class RegistrationServiceTest {
         userRepository = mock(UserRepository.class);
         tokenService = mock(ConfirmationTokenService.class);
         PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
-        this.registrationService = new RegistrationService(userRepository,passwordEncoder,tokenService);
+        EmailService emailService = mock(EmailService.class);
+        this.registrationService = new RegistrationService(userRepository,passwordEncoder,tokenService,emailService);
     }
 
     @Test
@@ -50,7 +52,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    void shouldCreateAUserSuccessfully(){
+    void shouldCreateAUserSuccessfully() throws MessagingException {
         CreateUserDto createUserDto = new CreateUserDto("user","u@u","user");
         User user = User.builder().build();
         ConfirmationToken confirmationToken = new ConfirmationToken(1L, "random", user);
