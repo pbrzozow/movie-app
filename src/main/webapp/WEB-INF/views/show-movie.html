@@ -32,7 +32,7 @@
             <h3>User Reviews</h3>
             <div class="list-group">
                 <div th:each="comment :${comments}" class="list-group-item">
-                    <strong th:text="${comment.userdto.username}">Username</strong> <span th:text="${comment.date}"></span><br>
+                    <strong th:text="${comment.userDto.username}">Username</strong> <span th:text="${comment.date}"></span><br>
                     <p th:text="${comment.text}"></p>
                 </div>
             </div>
