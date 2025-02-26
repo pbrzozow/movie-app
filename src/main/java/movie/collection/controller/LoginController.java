@@ -29,14 +29,13 @@ public class LoginController {
 
 
 
-    //TODO 1
     @PostMapping("/login")
     public String loginUser(@ModelAttribute("login") LoginRequest loginRequest,Model model){
         UsernamePasswordAuthenticationToken authInputToken =
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
         Authentication authentication = authManager.authenticate(authInputToken);
         if (authentication.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
             return "redirect:/";
         }
         return "redirect:/login";

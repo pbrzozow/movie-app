@@ -3,7 +3,6 @@ package movie.collection.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import movie.collection.model.Category;
 
 @Data
 @Builder
@@ -17,5 +16,5 @@ public class MovieSummary {
     private int releaseYear;
     private int duration;
     private String description;
-    private Category category;
+    private String category;
 }

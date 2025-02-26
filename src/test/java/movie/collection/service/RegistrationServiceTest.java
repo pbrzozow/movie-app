@@ -28,7 +28,7 @@ public class RegistrationServiceTest {
         tokenService = mock(ConfirmationTokenService.class);
         PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
         EmailService emailService = mock(EmailService.class);
-        this.registrationService = new RegistrationService(userRepository,passwordEncoder,tokenService,emailService);
+        this.registrationService = new RegistrationService(userRepository,passwordEncoder,tokenService);
     }
 
     @Test

@@ -19,6 +19,9 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true,name = "external_id")
+    private String externalId;
+
     private String icon;
 
     private String title;
@@ -26,17 +29,16 @@ public class Movie {
     private Double rating=0.0;
 
     @Column(name = "watched_times")
-    private int watchedTimes = 0;
+    private Integer watchedTimes = 0;
 
     @Column(name = "release_year")
-    private int releaseYear;
+    private Integer releaseYear;
 
-    private int duration;
+    private Integer duration;
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    private String category;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Comment> comments;

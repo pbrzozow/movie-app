@@ -19,13 +19,13 @@ public class RegistrationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ConfirmationTokenService tokenService;
-    private final EmailService emailService;
+//    private final EmailService emailService;
 
-    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, ConfirmationTokenService tokenService, EmailService emailService) {
+    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, ConfirmationTokenService tokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
-        this.emailService = emailService;
+//        this.emailService = emailService;
     }
 
     public User createUser(CreateUserDto createUserDto){
@@ -57,7 +57,8 @@ public class RegistrationService {
     private void sendConfirmationEmail(String email, String token) throws MessagingException {
         String subject = "Account activation link!";
         String confirmationLink = getConfirmationLink(token);
-        emailService.sendEmailWithLink(email, subject, confirmationLink);
+        System.out.println(confirmationLink);
+//        emailService.sendEmailWithLink(email, subject, confirmationLink);
     }
 
 

@@ -30,7 +30,7 @@ public class RegistrationController {
     public String createUser(@ModelAttribute("user") CreateUserDto user, Model model){
         System.out.println(user.toString());
         try {
-            String token = registrationService.registerUser(user);
+            registrationService.registerUser(user);
         } catch (MessagingException e) {
             return "redirect:/register?error";
         }

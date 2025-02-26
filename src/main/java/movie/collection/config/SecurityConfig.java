@@ -19,7 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = "movie.collection.repository")
 public class SecurityConfig {
     private final UserRepository userRepository;
 
