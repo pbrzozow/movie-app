@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -37,7 +38,7 @@ public class MovieService {
         if (movie==null){throw new MovieNotFoundException("Movie does not exists!");}
         return movieMapper.entityToDto(movie);
     }
-
+    @Transactional
     public void saveMovieOrUpdateExisting(Movie movie){
         Optional<Movie> existingMovie = movieRepository.findByExternalId(movie.getExternalId());
         if (existingMovie.isPresent()){
@@ -49,7 +50,7 @@ public class MovieService {
             savedMovie.setDuration(movie.getDuration());
             savedMovie.setReleaseYear(movie.getReleaseYear());
             movieRepository.save(savedMovie);
-        }else {
+        }else if (existingMovie.isEmpty()){
             movieRepository.save(movie);
         }
     }
