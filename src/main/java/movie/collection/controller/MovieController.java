@@ -22,7 +22,7 @@ public class MovieController {
     }
 
 
-    @GetMapping("/movies")
+    @GetMapping("/")
     public String listMovies(Model model, @RequestParam(required = false, defaultValue = "0") int page){
         Page<MovieSummary> movies = movieService.listMovies(page);
         model.addAttribute("movies",movies);
