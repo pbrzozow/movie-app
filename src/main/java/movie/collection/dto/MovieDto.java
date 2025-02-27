@@ -11,9 +11,9 @@ public class MovieDto {
     private String icon;
     private String title;
     private Double rating=0.0;
-    private int watchedTimes = 0;
-    private int releaseYear;
-    private int duration;
+    private Integer watchedTimes = 0;
+    private Integer releaseYear;
+    private Integer duration;
     private String description;
     private String category;
 
