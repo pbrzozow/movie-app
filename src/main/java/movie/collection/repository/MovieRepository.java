@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie,Long> {
 
-    @Query("select new movie.collection.dto.MovieSummary(m.id, m.icon, m.title,m.rating, m.watchedTimes, m.releaseYear, m.duration, m.description, m.category) from Movie m")
+    @Query("select new movie.collection.dto.MovieSummary(m.id,m.externalId, m.icon, m.title,m.rating, m.watchedTimes, m.releaseYear, m.duration, m.description, m.category) from Movie m")
     Page<MovieSummary> findAllMovieSummaries(Pageable pageable);
 
     @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.comments WHERE m.id = :id")
