@@ -30,17 +30,28 @@
     <div class="row mt-5">
         <div class="col-md-12">
             <h3>User Reviews</h3>
+            <form th:action="@{/comment/{movieId}/{username}(movieId=${movie.id}, username=${username})}" method="post">
+
+                <div class="form-group">
+                    <label for="content">Your Comment</label>
+                    <textarea id="content" name="text" class="form-control" rows="3" required></textarea>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+                <br>
+            </form>
             <div class="list-group">
                 <div th:each="comment :${comments}" class="list-group-item">
-                    <strong th:text="${comment.userDto.username}">Username</strong> <span th:text="${comment.date}"></span><br>
+                    <strong th:text="${comment.userDto.username}">Username</strong> <span th:text="${comment.date}"></span>
                     <p th:text="${comment.text}"></p>
+                    <br>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-
+<br>
 <div th:replace="footer :: footer"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
