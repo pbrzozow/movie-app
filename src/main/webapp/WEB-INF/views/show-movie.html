@@ -21,7 +21,30 @@
             <p><strong>Release Date:</strong> <span th:text="${movie.releaseYear}"></span></p>
             <p><strong>Duration:</strong> <span th:text="${movie.duration}"></span></p>
 <!--            <p><strong>Director:</strong> John Doe</p>-->
-            <p><strong>Rating:</strong> <span th:text="${movie.rating}"></span>/10</p>
+            <p><strong>Rating:</strong> <span th:text="${movie.rating}"></span>/5</p>
+            <p><strong>Rate this movie:</strong></p>
+            <form th:action="@{/rating/{movieId}(movieId=${movie.id})}" method="post">
+                <div class="btn-group" role="group" aria-label="Star rating">
+                    <input type="radio" class="btn-check" id="star1" name="rate" value="1">
+                    <label class="btn btn-outline-warning" for="star1"><i class="bi bi-star-fill"></i></label>
+
+                    <input type="radio" class="btn-check" id="star2" name="rate" value="2">
+                    <label class="btn btn-outline-warning" for="star2"><i class="bi bi-star-fill"></i></label>
+
+                    <input type="radio" class="btn-check" id="star3" name="rate" value="3">
+                    <label class="btn btn-outline-warning" for="star3"><i class="bi bi-star-fill"></i></label>
+
+                    <input type="radio" class="btn-check" id="star4" name="rate" value="4">
+                    <label class="btn btn-outline-warning" for="star4"><i class="bi bi-star-fill"></i></label>
+
+                    <input type="radio" class="btn-check" id="star5" name="rate" value="5">
+                    <label class="btn btn-outline-warning" for="star5"><i class="bi bi-star-fill"></i></label>
+
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary mt-2 btn-sm">Submit Rating</button>
+            </form>
+
             <p><strong>Watched:</strong> <span th:text="${movie.watchedTimes}"></span> times</p>
             <p th:text="${movie.description}" class="mt-3"></p>
         </div>
@@ -30,7 +53,7 @@
     <div class="row mt-5">
         <div class="col-md-12">
             <h3>User Reviews</h3>
-            <form th:action="@{/comment/{movieId}/{username}(movieId=${movie.id}, username=${username})}" method="post">
+            <form th:action="@{/comment/{movieId}(movieId=${movie.id}, username=${username})}" method="post">
 
                 <div class="form-group">
                     <label for="content">Your Comment</label>

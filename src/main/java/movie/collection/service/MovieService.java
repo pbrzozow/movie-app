@@ -31,12 +31,17 @@ public class MovieService {
         Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
         return movieRepository.findAllMovieSummaries(pageable);
     }
-
-    public MovieDto findMovieById(String id) throws MovieNotFoundException{
-        long movieId = Long.parseLong(id);
-        Movie movie= movieRepository.findMovieWithComments(movieId);
-        if (movie==null){throw new MovieNotFoundException("Movie does not exists!");}
+    public MovieDto findMovieDtoById(Long id) throws MovieNotFoundException{
+        Movie movie = findMovieById(id);
         return movieMapper.entityToDto(movie);
+    }
+    public Movie findMovieById(Long id) {
+        Movie movie = movieRepository.findMovieWithComments(id);
+        Movie movieWithRatings = movieRepository.findMovieWithRatings(id);
+        if(movie==null||movieWithRatings==null){ throw new MovieNotFoundException("Movie with id: "+ id +" does not exists");}
+        movie.setRatings(movieWithRatings.getRatings());
+        movie.setRating(movie.getRatings().stream().mapToInt(Rating::getRating).average().orElse(0.0));
+        return movie;
     }
 
     @Transactional

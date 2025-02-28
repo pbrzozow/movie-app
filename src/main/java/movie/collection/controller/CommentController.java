@@ -15,9 +15,10 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/{movieId}/{username}")
-    public String publishComment(@PathVariable("movieId") String movieId, @PathVariable("username") String username, @RequestParam String text){
-        commentService.saveComment(text,username,Long.parseLong(movieId));
+    @PostMapping("/{movieId}")
+    public String publishComment(@PathVariable("movieId") Long movieId, @RequestParam String text,Principal principal){
+        String username = principal.getName();
+        commentService.saveComment(text,username,movieId);
         return "redirect:/movie/"+movieId;
     }
 }

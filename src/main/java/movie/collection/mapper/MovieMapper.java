@@ -3,6 +3,7 @@ package movie.collection.mapper;
 import movie.collection.dto.MovieDto;
 import movie.collection.dto.external.MovieExternalDto;
 import movie.collection.model.Movie;
+import movie.collection.model.Rating;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -37,8 +38,7 @@ public class MovieMapper {
                 .icon(externalDto.getPrimaryImage())
                 .releaseYear(externalDto.getStartYear())
                 .duration(externalDto.getRuntimeMinutes())
-                .category(
-                        externalDto.getGenres().get(0))
+                .category(externalDto.getGenres().get(0))
                 .build();
     }
 }

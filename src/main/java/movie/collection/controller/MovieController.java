@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class MovieController {
@@ -31,8 +30,8 @@ public class MovieController {
     }
 
     @GetMapping("/movie/{id}")
-    public String findMovieById(Model model, @PathVariable String id, Principal principal){
-        MovieDto movieDto = movieService.findMovieById(id);
+    public String findMovieById(Model model, @PathVariable Long id, Principal principal){
+        MovieDto movieDto = movieService.findMovieDtoById(id);
         model.addAttribute("username",principal.getName());
         model.addAttribute("movie",movieDto);
         model.addAttribute("comments",movieDto.getComments());

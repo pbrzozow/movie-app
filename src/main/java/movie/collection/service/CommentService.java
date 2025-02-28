@@ -17,21 +17,19 @@ import org.springframework.stereotype.Service;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
-    private final MovieRepository movieRepository;
-    private final UserRepository userRepository;
+    private final MovieService movieService;
+    private final UserService userService;
 
-    public CommentService(CommentRepository commentRepository, CommentMapper commentMapper, MovieRepository movieRepository, UserRepository userRepository) {
+    public CommentService(CommentRepository commentRepository, CommentMapper commentMapper, MovieService movieService, UserService userService) {
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;
-        this.movieRepository = movieRepository;
-        this.userRepository = userRepository;
+        this.movieService = movieService;
+        this.userService = userService;
     }
 
     public CommentDto saveComment(String text, String username, Long movieId){
-        Movie movie = movieRepository.findById(movieId)
-                .orElseThrow(()->new MovieNotFoundException("Movie with id: "+ movieId + "does not exist"));
-        User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + "does not exist"));
+        Movie movie = movieService.findMovieById(movieId);
+        User user = userService.findUserByUsername(username);
         Comment comment = Comment.builder()
                 .movie(movie)
                 .text(text)

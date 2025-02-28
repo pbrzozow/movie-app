@@ -22,6 +22,11 @@ public interface MovieRepository extends JpaRepository<Movie,Long> {
     @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.comments WHERE m.id = :id")
     Movie findMovieWithComments(@Param("id") Long id);
 
+    @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.ratings WHERE m.id = :id")
+    Movie findMovieWithRatings(@Param("id") Long id);
+
+
+    Optional<Movie> findById(Long externalId);
     Optional<Movie> findByExternalId(String externalId);
 
 }
