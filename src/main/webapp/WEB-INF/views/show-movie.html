@@ -53,7 +53,7 @@
     <div class="row mt-5">
         <div class="col-md-12">
             <h3>User Reviews</h3>
-            <form th:action="@{/comment/{movieId}(movieId=${movie.id}, username=${username})}" method="post">
+            <form th:action="@{/comment/{movieId}(movieId=${movie.id})}" method="post">
 
                 <div class="form-group">
                     <label for="content">Your Comment</label>
