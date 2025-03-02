@@ -49,4 +49,7 @@ public class Movie {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Rating> ratings;
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<MovieStatus> movieStatuses;
+
 }

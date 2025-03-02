@@ -16,6 +16,7 @@ import java.util.Optional;
 
 
 @Service
+@Transactional
 public class MovieService {
     private static final int PAGE_SIZE = 30;
 
@@ -35,12 +36,24 @@ public class MovieService {
         Movie movie = findMovieById(id);
         return movieMapper.entityToDto(movie);
     }
-    public Movie findMovieById(Long id) {
+
+    protected Movie findMovieById(Long id) {
         Movie movie = movieRepository.findMovieWithComments(id);
+        if (movie == null) {
+            throw new MovieNotFoundException("Movie with id: " + id + " does not exist");
+        }
+
         Movie movieWithRatings = movieRepository.findMovieWithRatings(id);
-        if(movie==null||movieWithRatings==null){ throw new MovieNotFoundException("Movie with id: "+ id +" does not exists");}
-        movie.setRatings(movieWithRatings.getRatings());
-        movie.setRating(movie.getRatings().stream().mapToInt(Rating::getRating).average().orElse(0.0));
+        if (movieWithRatings != null) {
+            movie.setRatings(movieWithRatings.getRatings());
+            movie.setRating(movie.getRatings().stream().mapToInt(Rating::getRating).average().orElse(0.0));
+        }
+
+        Movie movieWithStatuses = movieRepository.findMovieWithStatuses(id);
+        if (movieWithStatuses != null) {
+            movie.setMovieStatuses(movieWithStatuses.getMovieStatuses());
+            movie.setWatchedTimes(movie.getMovieStatuses().size());
+        }
         return movie;
     }
 
