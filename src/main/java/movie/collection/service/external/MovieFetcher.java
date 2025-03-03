@@ -3,15 +3,17 @@ package movie.collection.service.external;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import movie.collection.dto.external.MovieExternalDto;
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClient;
+import movie.collection.mapper.MovieMapper;
+import movie.collection.service.MovieService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -24,41 +26,33 @@ public class MovieFetcher {
     private static final String API_HOST = "imdb236.p.rapidapi.com";
 
     private final ObjectMapper objectMapper;
+    private final MovieMapper movieMapper;
+    private final MovieService movieService;
 
-    public MovieFetcher() {
+    public MovieFetcher(MovieMapper movieMapper, MovieService movieService) {
+        this.movieMapper = movieMapper;
+        this.movieService = movieService;
         ObjectMapper objectMapper = new ObjectMapper();
          this.objectMapper = objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     }
 
+    @Async
+    public CompletableFuture<Void> fetchMovies() {
+        return CompletableFuture.runAsync(() -> {
+            HttpResponse<String> response = Unirest.get(API_URL)
+                    .header("x-rapidapi-key", apiKey)
+                    .header("x-rapidapi-host", API_HOST)
+                    .asString();
 
-
-    public CompletableFuture<List<MovieExternalDto>> fetchMovies() {
-        AsyncHttpClient client = new DefaultAsyncHttpClient();
-
-        return client.prepareGet(API_URL)
-                .setHeader("x-rapidapi-key", apiKey)
-                .setHeader("x-rapidapi-host", API_HOST)
-                .addQueryParam("page", "2")
-                .addQueryParam("limit", "10")
-
-                .execute()
-                .toCompletableFuture()
-                .thenApply(response -> {
-                    try {
-                        List<MovieExternalDto> movies = objectMapper.readValue(response.getResponseBody(),new TypeReference<List<MovieExternalDto>>(){} );
-                        System.out.println(movies);
-                        return movies;
-                    } catch (IOException e) {
-                        throw new RuntimeException("Error parsing API response", e);
-                    }
-                })
-                .whenComplete((result, ex) -> {
-                    try {
-                        client.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException("Error closing client", e);
-                    }
-                });
+            String body = response.getBody();
+            try {
+                List<MovieExternalDto> movies = objectMapper.readValue(body, new TypeReference<List<MovieExternalDto>>() {});
+                movies.stream().map(movieMapper::externalDtoToEntity).forEach(movieService::saveMovieOrUpdateExisting);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
+
 }
