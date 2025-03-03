@@ -3,7 +3,7 @@
 <body>
 <nav th:fragment="navbar" class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" th:href="@{/}">
             <img src="https://th.bing.com/th/id/OIP.3C9P6X2vrW-EGjNpsSMgyQHaK9?rs=1&pid=ImgDetMain" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             Movie Collection
         </a>
@@ -12,9 +12,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Search</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
+                <li class="nav-item"><a class="nav-link active" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/search}">Search</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/admin}">Admin</a></li>
             </ul>
             <span class="navbar-text">
                     <div class="d-grid">

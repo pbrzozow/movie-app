@@ -31,9 +31,8 @@ public class MovieController {
     }
 
     @GetMapping("/search")
-    public String searchForMovie(Model model, @RequestParam(value = "title",defaultValue = "") String title, @RequestParam(value = "category",defaultValue = "") String category){
-        List<MovieSummary> movies = movieService.findMoviesByTitleAndCategory(title,category);
-        System.out.println(movies);
+    public String searchForMovie(Model model, @RequestParam(value = "title",defaultValue = "") String title, @RequestParam(value = "category",defaultValue = "") String category,@RequestParam(required = false, defaultValue = "0") int page){
+        Page<MovieSummary> movies = movieService.findMoviesByTitleAndCategory(title,category,page);
         model.addAttribute("movies",movies);
         return "search";
     }

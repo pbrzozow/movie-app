@@ -28,7 +28,10 @@ public interface MovieRepository extends JpaRepository<Movie,Long> {
     @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.movieStatuses WHERE m.id = :id")
     Movie findMovieWithStatuses(@Param("id") Long id);
 
-    List<Movie> findMoviesByTitleLikeAndCategoryLike(String title,String category);
+    @Query("SELECT new movie.collection.dto.MovieSummary(m.id,m.externalId,m.icon,m.title,m.rating,m.watchedTimes,m.releaseYear" +
+            ",m.duration,m.description,m.category) FROM Movie m " +
+            "WHERE m.title LIKE %:title% AND m.category LIKE %:category%")
+    Page<MovieSummary> findMoviesByTitleLikeAndCategoryLike(@Param("title") String title, @Param("category") String category, Pageable pageable);
 
     Optional<Movie> findById(Long externalId);
     Optional<Movie> findByExternalId(String externalId);

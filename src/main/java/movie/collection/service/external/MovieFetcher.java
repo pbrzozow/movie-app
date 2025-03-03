@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 public class MovieFetcher {
     @Value("${movie.api.key}")
     private String apiKey;
-    private static final String API_URL="https://imdb236.p.rapidapi.com/imdb/top-box-office";
+    private static final String API_URL="https://imdb236.p.rapidapi.com/imdb/top250-movies";
     private static final String API_HOST = "imdb236.p.rapidapi.com";
 
     private final ObjectMapper objectMapper;

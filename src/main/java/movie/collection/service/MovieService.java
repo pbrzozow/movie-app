@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 
 @Service
@@ -35,14 +35,11 @@ public class MovieService {
         return movieRepository.findAllMovieSummaries(pageable);
     }
 
-    public List<MovieSummary> findMoviesByTitleAndCategory(String title,String category){
+    public Page<MovieSummary> findMoviesByTitleAndCategory(String title,String category,int pageNo){
         String searchTitle = (title == null || title.isBlank()) ? "%" : title;
         String searchCategory = (category == null || category.isBlank()) ? "%" : category;
-
-        return movieRepository.findMoviesByTitleLikeAndCategoryLike(searchTitle,searchCategory)
-                .stream()
-                .map(movieMapper::entityToSummary)
-                .toList();
+        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
+        return movieRepository.findMoviesByTitleLikeAndCategoryLike(searchTitle,searchCategory,pageable);
     }
 
     public MovieDto findMovieDtoById(Long id) throws MovieNotFoundException{
