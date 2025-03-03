@@ -14,7 +14,7 @@ public class UserMapper {
         this.userRepository = userRepository;
     }
 
-    public UserDto enitityToDto(User user){
+    public UserDto entityToDto(User user){
         return new UserDto(user.getId(),user.getUsername());
     }
     public User dtoToEntity(UserDto userDto){

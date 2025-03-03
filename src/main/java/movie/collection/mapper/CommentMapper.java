@@ -14,7 +14,7 @@ public class CommentMapper {
     }
 
     public CommentDto entityToDto(Comment comment){
-        UserDto userDto= userMapper.enitityToDto(comment.getUser());
+        UserDto userDto= userMapper.entityToDto(comment.getUser());
         return new CommentDto(comment.getId(), comment.getDate(),userDto, comment.getText());
     }
 }

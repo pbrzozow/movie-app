@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class MovieController {
@@ -26,7 +27,15 @@ public class MovieController {
     public String listMovies(Model model, @RequestParam(required = false, defaultValue = "0") int page){
         Page<MovieSummary> movies = movieService.listMovies(page);
         model.addAttribute("movies",movies);
-        return "index";
+        return "home";
+    }
+
+    @GetMapping("/search")
+    public String searchForMovie(Model model, @RequestParam(value = "title",defaultValue = "") String title, @RequestParam(value = "category",defaultValue = "") String category){
+        List<MovieSummary> movies = movieService.findMoviesByTitleAndCategory(title,category);
+        System.out.println(movies);
+        model.addAttribute("movies",movies);
+        return "search";
     }
 
     @GetMapping("/movie/{id}")

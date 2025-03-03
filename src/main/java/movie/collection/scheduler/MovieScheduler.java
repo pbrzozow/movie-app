@@ -21,13 +21,13 @@ public class MovieScheduler {
     @Scheduled(fixedRate = 300000)
     public void fetchAndSaveMovies(){
         System.out.println("fetching movies");
-//        movieFetcher.fetchMovies()
-//                .thenAccept(movies ->
-//                    movies.stream().map(movieMapper::externalDtoToEntity).forEach(movieService::saveMovieOrUpdateExisting))
-//                .exceptionally(ex -> {
-//                    System.err.println("Error fetching movies: " + ex.getMessage());
-//                    return null;});
-        movieService.initialize();
+        movieFetcher.fetchMovies()
+                .thenAccept(movies ->
+                    movies.stream().map(movieMapper::externalDtoToEntity).forEach(movieService::saveMovieOrUpdateExisting))
+                .exceptionally(ex -> {
+                    System.err.println("Error fetching movies: " + ex.getMessage());
+                    return null;});
+//        movieService.initialize();
         System.out.println("movies fetched");
 }
 }

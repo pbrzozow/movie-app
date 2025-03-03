@@ -39,12 +39,15 @@ public class MovieFetcher {
         return client.prepareGet(API_URL)
                 .setHeader("x-rapidapi-key", apiKey)
                 .setHeader("x-rapidapi-host", API_HOST)
+                .addQueryParam("page", "2")
+                .addQueryParam("limit", "10")
+
                 .execute()
                 .toCompletableFuture()
                 .thenApply(response -> {
                     try {
-                        System.out.println(response.getResponseBody());
                         List<MovieExternalDto> movies = objectMapper.readValue(response.getResponseBody(),new TypeReference<List<MovieExternalDto>>(){} );
+                        System.out.println(movies);
                         return movies;
                     } catch (IOException e) {
                         throw new RuntimeException("Error parsing API response", e);

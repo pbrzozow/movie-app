@@ -1,6 +1,7 @@
 package movie.collection.mapper;
 
 import movie.collection.dto.MovieDto;
+import movie.collection.dto.MovieSummary;
 import movie.collection.dto.external.MovieExternalDto;
 import movie.collection.model.Movie;
 import movie.collection.model.Rating;
@@ -14,6 +15,20 @@ public class MovieMapper {
         this.commentMapper = commentMapper;
     }
 
+    public MovieSummary entityToSummary(Movie movie){
+        return MovieSummary.builder()
+                .id(movie.getId())
+                .category(movie.getCategory())
+                .description(movie.getDescription())
+                .rating(movie.getRating())
+                .duration(movie.getDuration())
+                .title(movie.getTitle())
+                .icon(movie.getIcon())
+                .externalId(movie.getExternalId())
+                .releaseYear(movie.getReleaseYear())
+                .watchedTimes(movie.getWatchedTimes())
+                .build();
+    }
 
     public MovieDto entityToDto(Movie movie) {
         return MovieDto.builder()
