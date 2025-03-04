@@ -1,5 +1,8 @@
 package movie.collection.config;
 
+import movie.collection.exception.UserNotFoundException;
+import movie.collection.model.Role;
+import movie.collection.model.User;
 import movie.collection.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,6 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/admin").hasAuthority("ADMIN")
                         .requestMatchers("/movie/**").authenticated()
                         .anyRequest().permitAll()
                 )
@@ -48,11 +52,10 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(){
-        return username ->
-                userRepository.findUserByUsername(username).orElseThrow(()->new UsernameNotFoundException("Invalid user credentials"));
-
+        @Bean
+        public UserDetailsService userDetailsService() {
+                return username ->  userRepository.findUserByUsername(username)
+                        .orElseThrow(()->new UserNotFoundException("User does not exist"));
     }
 
     @Bean

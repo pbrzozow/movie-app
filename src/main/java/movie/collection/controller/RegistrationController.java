@@ -1,6 +1,7 @@
 package movie.collection.controller;
 
 import movie.collection.dto.CreateUserDto;
+import movie.collection.model.TokenType;
 import movie.collection.service.RegistrationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String createUser(@ModelAttribute("user") CreateUserDto user, Model model){
+    public String createUser(@ModelAttribute("user") CreateUserDto user){
         System.out.println(user.toString());
         try {
             registrationService.registerUser(user);
@@ -38,10 +39,8 @@ public class RegistrationController {
     }
     @GetMapping("/confirm")
     public String confirmToken(@RequestParam("token") String token){
-        registrationService.confirmToken(token);
+        registrationService.confirmToken(token, TokenType.CONFIRMATION);
         return "redirect:/login";
-
     }
-
 
 }

@@ -3,8 +3,9 @@ package movie.collection.service;
 import movie.collection.dto.CreateUserDto;
 import movie.collection.exception.TokenNotFoundException;
 import movie.collection.exception.UsernameAlreadyExistsException;
-import movie.collection.model.ConfirmationToken;
+import movie.collection.model.Token;
 import movie.collection.model.Role;
+import movie.collection.model.TokenType;
 import movie.collection.model.User;
 import movie.collection.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,10 +19,10 @@ import java.util.Optional;
 public class RegistrationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ConfirmationTokenService tokenService;
+    private final TokenService tokenService;
 //    private final EmailService emailService;
 
-    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, ConfirmationTokenService tokenService) {
+    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
@@ -50,8 +51,8 @@ public class RegistrationService {
     }
 
     private String generateConfirmationToken(User user) {
-        ConfirmationToken confirmationToken = tokenService.createToken(user);
-        return confirmationToken.getToken();
+        Token token = tokenService.createConfirmationToken(user);
+        return token.getToken();
     }
 
     private void sendConfirmationEmail(String email, String token) throws MessagingException {
@@ -76,8 +77,8 @@ public class RegistrationService {
     }
 
     @Transactional
-    public void confirmToken(String token) throws TokenNotFoundException {
-        ConfirmationToken confirmationToken = tokenService.getToken(token);
+    public void confirmToken(String token, TokenType tokenType) throws TokenNotFoundException {
+        Token confirmationToken = tokenService.getToken(token,tokenType);
         User user = confirmationToken.getUser();
         user.setActive(true);
         userRepository.save(user);
