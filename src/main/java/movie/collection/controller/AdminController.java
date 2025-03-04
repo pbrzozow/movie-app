@@ -1,7 +1,10 @@
 package movie.collection.controller;
 
+import movie.collection.dto.MovieSummary;
 import movie.collection.service.AdministrationService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;

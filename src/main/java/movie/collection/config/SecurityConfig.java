@@ -34,6 +34,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin").hasAuthority("ADMIN")
+                        .requestMatchers("/movie/disable/**").hasAuthority("ADMIN")
                         .requestMatchers("/movie/**").authenticated()
                         .anyRequest().permitAll()
                 )
@@ -48,14 +49,14 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout=true")
                         .permitAll()
-                );;
+                );
         return http.build();
     }
 
         @Bean
         public UserDetailsService userDetailsService() {
                 return username ->  userRepository.findUserByUsername(username)
-                        .orElseThrow(()->new UserNotFoundException("User does not exist"));
+                        .orElseThrow(()->new UserNotFoundException("Invalid credentials were provided."));
     }
 
     @Bean

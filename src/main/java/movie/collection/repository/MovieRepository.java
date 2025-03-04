@@ -2,6 +2,7 @@ package movie.collection.repository;
 
 import movie.collection.dto.MovieSummary;
 import movie.collection.model.Movie;
+import movie.collection.model.MovieStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie,Long> {
 
-    @Query("select new movie.collection.dto.MovieSummary(m.id,m.externalId, m.icon, m.title,m.rating, m.watchedTimes, m.releaseYear, m.duration, m.description, m.category) from Movie m")
+    @Query("select new movie.collection.dto.MovieSummary(m.id,m.externalId, m.icon, m.title,m.rating, m.watchedTimes, m.releaseYear, m.duration, m.description, m.category) from Movie m WHERE m.movieStatus ='ACTIVE'")
     Page<MovieSummary> findAllMovieSummaries(Pageable pageable);
 
     @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.comments WHERE m.id = :id AND m.movieStatus='ACTIVE'")
@@ -30,10 +31,9 @@ public interface MovieRepository extends JpaRepository<Movie,Long> {
 
     @Query("SELECT new movie.collection.dto.MovieSummary(m.id,m.externalId,m.icon,m.title,m.rating,m.watchedTimes,m.releaseYear" +
             ",m.duration,m.description,m.category) FROM Movie m " +
-            "WHERE m.title LIKE %:title% AND m.category LIKE %:category%")
+            "WHERE m.title LIKE %:title% AND m.category LIKE %:category% AND m.movieStatus='ACTIVE'")
     Page<MovieSummary> findMoviesByTitleLikeAndCategoryLike(@Param("title") String title, @Param("category") String category, Pageable pageable);
 
-    Optional<Movie> findById(Long externalId);
-    Optional<Movie> findByExternalId(String externalId);
+    Optional<Movie> findByExternalIdAndMovieStatus(String externalId, MovieStatus movieStatus);
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -50,6 +50,12 @@
                 <button type="submit" class="btn btn-primary btn-sm">Mark as Watched</button>
             </form>
             <p th:text="${movie.description}" class="mt-3"></p>
+            <form th:if="${role.equals('ADMIN')}" th:action="@{/movie/disable/{id}(id=${movie.id})}" th:method="post">
+                <button type="submit" class="btn btn-danger btn-sm">
+                    Deactivate Movie
+                </button>
+            </form>
+
         </div>
     </div>
 
@@ -67,9 +73,15 @@
                 <br>
             </form>
             <div class="list-group">
-                <div th:each="comment :${comments}" class="list-group-item">
+                <div th:each="comment :${movie.comments}" class="list-group-item">
                     <strong th:text="${comment.userDto.username}">Username</strong> <span th:text="${comment.date}"></span>
                     <p th:text="${comment.text}"></p>
+
+                    <form th:if="${role.equals('ADMIN')}" th:action="@{/comment/delete/{id}(id=${comment.id})}" th:method="post">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete Comment
+                        </button>
+                    </form>
                     <br>
                 </div>
             </div>

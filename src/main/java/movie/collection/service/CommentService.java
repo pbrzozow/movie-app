@@ -11,6 +11,7 @@ import movie.collection.repository.CommentRepository;
 import movie.collection.repository.MovieRepository;
 import movie.collection.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -38,7 +39,7 @@ public class CommentService {
         Comment savedComment = commentRepository.save(comment);
         return commentMapper.entityToDto(savedComment);
     }
-
+    @Transactional
     public void deleteComment(Long id) {
         commentRepository.deleteById(id);
     }

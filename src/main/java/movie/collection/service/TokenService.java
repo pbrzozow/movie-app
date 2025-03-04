@@ -8,6 +8,7 @@ import movie.collection.model.User;
 import movie.collection.repository.TokenRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -32,6 +33,7 @@ public class TokenService {
         Token token = new Token();
         token.setToken(tokenId);
         token.setTokenType(tokenType);
+        token.setExpirationTime(LocalDateTime.now().plusHours(24));
         token.setUser(user);
         return token;
     }

@@ -41,7 +41,7 @@ public class Movie {
     private String category;
     @Enumerated(value = EnumType.STRING)
     private MovieStatus movieStatus;
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)

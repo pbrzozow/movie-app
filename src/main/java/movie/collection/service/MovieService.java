@@ -72,7 +72,7 @@ public class MovieService {
 
     @Transactional
     public void saveMovieOrUpdateExisting(Movie movie){
-        Optional<Movie> existingMovie = movieRepository.findByExternalId(movie.getExternalId());
+        Optional<Movie> existingMovie = movieRepository.findByExternalIdAndMovieStatus(movie.getExternalId(),MovieStatus.ACTIVE);
         if (existingMovie.isPresent()){
             Movie savedMovie = existingMovie.get();
             savedMovie.setCategory(movie.getCategory());
@@ -96,6 +96,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie movie3= Movie.builder().icon("https://th.bing.com/th/id/OIP.3C9P6X2vrW-EGjNpsSMgyQHaK9?rs=1&pid=ImgDetMain")
                 .title("lama")
@@ -105,6 +106,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie movie2 = Movie.builder().icon("https://th.bing.com/th/id/OIP.3C9P6X2vrW-EGjNpsSMgyQHaK9?rs=1&pid=ImgDetMain")
                 .title("gamma")
@@ -114,6 +116,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie movie1 = Movie.builder().icon("https://th.bing.com/th/id/OIP.3C9P6X2vrW-EGjNpsSMgyQHaK9?rs=1&pid=ImgDetMain")
                 .title("The godfather")
@@ -123,6 +126,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie movie4 = Movie.builder().icon("https://th.bing.com/th/id/OIP.3C9P6X2vrW-EGjNpsSMgyQHaK9?rs=1&pid=ImgDetMain")
                 .title("alfa")
@@ -132,6 +136,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
 
         Movie movie5 = Movie.builder().icon("https://th.bing.com/th/id/OIP.3C9P6X2vrW-EGjNpsSMgyQHaK9?rs=1&pid=ImgDetMain")
@@ -142,6 +147,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie m1 = Movie.builder().icon("https://www.themoviedb.org/t/p/original/qMxAmzGQO722q0UlssCOPhrXmvX.jpg")
                 .title("Avengers")
@@ -151,6 +157,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie m2 = Movie.builder().icon("https://www.themoviedb.org/t/p/original/qMxAmzGQO722q0UlssCOPhrXmvX.jpg")
                 .title("avg")
@@ -160,6 +167,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie m3 = Movie.builder().icon("https://www.themoviedb.org/t/p/original/qMxAmzGQO722q0UlssCOPhrXmvX.jpg")
                 .title("Stranges")
@@ -169,6 +177,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie m4 = Movie.builder().icon("https://www.themoviedb.org/t/p/original/qMxAmzGQO722q0UlssCOPhrXmvX.jpg")
                 .title("Ula")
@@ -178,6 +187,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie m5 = Movie.builder().icon("https://www.themoviedb.org/t/p/original/qMxAmzGQO722q0UlssCOPhrXmvX.jpg")
                 .title("Kula")
@@ -187,6 +197,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.ACTIVE)
                 .build();
         Movie m6 = Movie.builder().icon("https://www.themoviedb.org/t/p/original/qMxAmzGQO722q0UlssCOPhrXmvX.jpg")
                 .title("Cebula")
@@ -196,6 +207,7 @@ public class MovieService {
                 .duration(50)
                 .releaseYear(1972)
                 .watchedTimes(5)
+                .movieStatus(MovieStatus.INACTIVE)
                 .build();
         movieRepository.save(theGodfather);
         movieRepository.save(movie1);

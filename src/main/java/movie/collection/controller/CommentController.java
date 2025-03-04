@@ -1,6 +1,7 @@
 package movie.collection.controller;
 
 import movie.collection.service.CommentService;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,5 +21,10 @@ public class CommentController {
         String username = principal.getName();
         commentService.saveComment(text,username,movieId);
         return "redirect:/movie/"+movieId;
+    }
+    @PostMapping("/delete/{id}")
+    public String deleteComment(@PathVariable("id") Long id){
+        commentService.deleteComment(id);
+        return "redirect:/";
     }
 }
