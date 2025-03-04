@@ -5,8 +5,10 @@ import movie.collection.dto.MovieSummary;
 import movie.collection.service.MovieService;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +46,13 @@ public class MovieController {
         model.addAttribute("movie",movieDto);
         model.addAttribute("comments",movieDto.getComments());
         return "show-movie";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @DeleteMapping("/movie/{id}")
+    public String deleteMovieById(@PathVariable Long id){
+        movieService.deactivateMovie(id);
+        return "redirect:/search";
     }
 
 

@@ -1,24 +1,5 @@
 package movie.collection.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Entity
-public class MovieStatus {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    private User user;
-    @ManyToOne
-    private Movie movie;
+public enum MovieStatus {
+    ACTIVE,INACTIVE
 }

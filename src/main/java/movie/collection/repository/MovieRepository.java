@@ -19,13 +19,13 @@ public interface MovieRepository extends JpaRepository<Movie,Long> {
     @Query("select new movie.collection.dto.MovieSummary(m.id,m.externalId, m.icon, m.title,m.rating, m.watchedTimes, m.releaseYear, m.duration, m.description, m.category) from Movie m")
     Page<MovieSummary> findAllMovieSummaries(Pageable pageable);
 
-    @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.comments WHERE m.id = :id")
+    @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.comments WHERE m.id = :id AND m.movieStatus='ACTIVE'")
     Movie findMovieWithComments(@Param("id") Long id);
 
-    @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.ratings WHERE m.id = :id")
+    @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.ratings WHERE m.id = :id AND m.movieStatus='ACTIVE'")
     Movie findMovieWithRatings(@Param("id") Long id);
 
-    @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.movieStatuses WHERE m.id = :id")
+    @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.watchedMovies WHERE m.id = :id AND m.movieStatus='ACTIVE'")
     Movie findMovieWithStatuses(@Param("id") Long id);
 
     @Query("SELECT new movie.collection.dto.MovieSummary(m.id,m.externalId,m.icon,m.title,m.rating,m.watchedTimes,m.releaseYear" +

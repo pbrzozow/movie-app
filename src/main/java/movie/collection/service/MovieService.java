@@ -44,6 +44,11 @@ public class MovieService {
         Movie movie = findMovieById(id);
         return movieMapper.entityToDto(movie);
     }
+    public void deactivateMovie(Long movieId){
+        Movie movie = findMovieById(movieId);
+        movie.setMovieStatus(MovieStatus.INACTIVE);
+        movieRepository.save(movie);
+    }
 
     protected Movie findMovieById(Long id) {
         Movie movie = movieRepository.findMovieWithComments(id);
@@ -59,8 +64,8 @@ public class MovieService {
 
         Movie movieWithStatuses = movieRepository.findMovieWithStatuses(id);
         if (movieWithStatuses != null) {
-            movie.setMovieStatuses(movieWithStatuses.getMovieStatuses());
-            movie.setWatchedTimes(movie.getMovieStatuses().size());
+            movie.setWatchedMovies(movieWithStatuses.getWatchedMovies());
+            movie.setWatchedTimes(movie.getWatchedMovies().size());
         }
         return movie;
     }

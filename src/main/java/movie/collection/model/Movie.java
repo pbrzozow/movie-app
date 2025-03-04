@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -42,7 +39,8 @@ public class Movie {
     private String description;
 
     private String category;
-
+    @Enumerated(value = EnumType.STRING)
+    private MovieStatus movieStatus;
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
@@ -50,6 +48,6 @@ public class Movie {
     private List<Rating> ratings;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<MovieStatus> movieStatuses;
+    private List<WatchedMovie> watchedMovies;
 
 }
