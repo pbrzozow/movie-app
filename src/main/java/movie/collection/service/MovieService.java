@@ -71,7 +71,7 @@ public class MovieService {
     }
 
     @Transactional
-    public void saveMovieOrUpdateExisting(Movie movie){
+    public void saveOrUpdateMovie(Movie movie){
         Optional<Movie> existingMovie = movieRepository.findByExternalIdAndMovieStatus(movie.getExternalId(),MovieStatus.ACTIVE);
         if (existingMovie.isPresent()){
             Movie savedMovie = existingMovie.get();
@@ -226,9 +226,5 @@ public class MovieService {
 
 
 
-    }
-
-    public void deleteById(Long id) {
-        movieRepository.deleteById(id);
     }
 }

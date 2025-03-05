@@ -3,6 +3,7 @@ package movie.collection.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
+import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 
 @Configuration
@@ -46,6 +48,10 @@ public class WebConfig implements WebMvcConfigurer {
         resolver.setTemplateMode("HTML");
         resolver.setCacheable(false);
         return resolver;
+    }
+    @Bean
+    public Filter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter();
     }
 
     @Override

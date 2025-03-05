@@ -9,15 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 @Service
-public class AdministrationServiceImpl implements AdministrationService {
+public class AdminInvitationServiceImpl implements AdminInvitationService {
     private final TokenService tokenService;
     private final UserService userService;
-//    private final EmailService emailService;
+//    private final EmailSender emailSender;
 
-    public AdministrationServiceImpl(TokenService tokenService, UserService userService) {
+    public AdminInvitationServiceImpl(TokenService tokenService, UserService userService) {
         this.tokenService = tokenService;
         this.userService = userService;
-//        this.emailService = emailService;
+//        this.emailSender = emailSender;
     }
 
 
@@ -27,13 +27,13 @@ public class AdministrationServiceImpl implements AdministrationService {
         User user = userService.findUserByUsername(username);
         String token = generateInvitationToken(user);
         String invitationLink = getConfirmationLink(token);
-//        emailService.sendEmailWithLink(user.getEmail(),"Admin invitation link. ",invitationLink);
+//        emailSender.sendEmail(user.getEmail(),"Admin invitation link. ",invitationLink);
         return invitationLink;
     }
 
     @Override
     @Transactional
-    public void acceptToken(String token) {
+    public void activateAdminPrivileges(String token) {
         Token invitationToken = tokenService.getToken(token, TokenType.ADMIN_INVITATION);
         User user = invitationToken.getUser();
         user.setRole(Role.ADMIN);

@@ -1,26 +1,23 @@
 package movie.collection.controller;
 
-import movie.collection.dto.MovieSummary;
-import movie.collection.service.AdministrationService;
-import org.springframework.data.domain.Page;
+import movie.collection.service.AdminInvitationService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 
 @Controller
 public class AdminController {
-    private final AdministrationService administrationService;
+    private final AdminInvitationService adminInvitationService;
 
-    public AdminController(AdministrationService administrationService) {
-        this.administrationService = administrationService;
+    public AdminController(AdminInvitationService adminInvitationService) {
+        this.adminInvitationService = adminInvitationService;
     }
 
     @PostMapping("/admin/invite")
     public String inviteAdmin(@RequestParam("admin_username") String username){
         try {
-            String link = administrationService.inviteAdmin(username);
+            String link = adminInvitationService.inviteAdmin(username);
             System.out.println(link);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
@@ -35,7 +32,7 @@ public class AdminController {
 
     @GetMapping("/accept")
     public String acceptInvitation(@RequestParam("token")String token){
-        administrationService.acceptToken(token);
+        adminInvitationService.activateAdminPrivileges(token);
         return "redirect:/";
     }
 

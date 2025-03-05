@@ -50,11 +50,14 @@
                 <button type="submit" class="btn btn-primary btn-sm">Mark as Watched</button>
             </form>
             <p th:text="${movie.description}" class="mt-3"></p>
-            <form th:if="${role.equals('ADMIN')}" th:action="@{/movie/disable/{id}(id=${movie.id})}" th:method="post">
+            <form th:if="${role != null && role.equals('ADMIN')}"
+                  th:action="@{/movie/disable/{id}(id=${movie.id})}"
+                  method="post">
                 <button type="submit" class="btn btn-danger btn-sm">
                     Deactivate Movie
                 </button>
             </form>
+
 
         </div>
     </div>
@@ -77,11 +80,14 @@
                     <strong th:text="${comment.userDto.username}">Username</strong> <span th:text="${comment.date}"></span>
                     <p th:text="${comment.text}"></p>
 
-                    <form th:if="${role.equals('ADMIN')}" th:action="@{/comment/delete/{id}(id=${comment.id})}" th:method="post">
+                    <form th:if="${role != null && role.equals('ADMIN')}"
+                          th:action="@{/comment/{movieId}/{id}(id=${comment.id},movieId=${movie.id})}"
+                          method="post">
                         <button type="submit" class="btn btn-danger btn-sm">
                             Delete Comment
                         </button>
                     </form>
+
                     <br>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 package movie.collection.service;
 
+import lombok.extern.slf4j.Slf4j;
 import movie.collection.dto.CreateUserDto;
 import movie.collection.exception.TokenNotFoundException;
 import movie.collection.exception.UsernameAlreadyExistsException;
@@ -29,16 +30,7 @@ public class RegistrationService {
 //        this.emailService = emailService;
     }
 
-    public User createUser(CreateUserDto createUserDto){
-        User user = User.builder()
-                .username(createUserDto.getUsername())
-                .password(passwordEncoder.encode(createUserDto.getPassword()))
-                .email(createUserDto.getEmail())
-                .role(Role.USER)
-                .build();
 
-        return userRepository.save(user);
-    }
     @Transactional
     public String registerUser(CreateUserDto createUserDto) throws UsernameAlreadyExistsException, MessagingException {
         validateUsername(createUserDto.getUsername());
@@ -50,6 +42,16 @@ public class RegistrationService {
         return token;
     }
 
+    public User createUser(CreateUserDto createUserDto){
+        User user = User.builder()
+                .username(createUserDto.getUsername())
+                .password(passwordEncoder.encode(createUserDto.getPassword()))
+                .email(createUserDto.getEmail())
+                .role(Role.USER)
+                .build();
+        return userRepository.save(user);
+    }
+
     private String generateConfirmationToken(User user) {
         Token token = tokenService.createConfirmationToken(user);
         return token.getToken();
@@ -59,7 +61,8 @@ public class RegistrationService {
         String subject = "Account activation link!";
         String confirmationLink = getConfirmationLink(token);
         System.out.println(confirmationLink);
-//        emailService.sendEmailWithLink(email, subject, confirmationLink);
+//        emailService.sendEmail(email, subject, confirmationLink);
+
     }
 
 
@@ -77,8 +80,8 @@ public class RegistrationService {
     }
 
     @Transactional
-    public void confirmToken(String token, TokenType tokenType) throws TokenNotFoundException {
-        Token confirmationToken = tokenService.getToken(token,tokenType);
+    public void confirmToken(String token) throws TokenNotFoundException {
+        Token confirmationToken = tokenService.getToken(token,TokenType.CONFIRMATION);
         User user = confirmationToken.getUser();
         user.setActive(true);
         userRepository.save(user);

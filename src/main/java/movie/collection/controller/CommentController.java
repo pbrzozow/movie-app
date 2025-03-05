@@ -22,9 +22,10 @@ public class CommentController {
         commentService.saveComment(text,username,movieId);
         return "redirect:/movie/"+movieId;
     }
-    @PostMapping("/delete/{id}")
-    public String deleteComment(@PathVariable("id") Long id){
+
+    @PostMapping("/{movieId}/{id}")
+    public String deleteComment(@PathVariable("id") Long id,@PathVariable("movieId") Long movieId){
         commentService.deleteComment(id);
-        return "redirect:/";
+        return "redirect:/movie/"+movieId;
     }
 }

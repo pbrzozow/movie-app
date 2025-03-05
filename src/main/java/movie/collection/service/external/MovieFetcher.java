@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import lombok.extern.slf4j.Slf4j;
 import movie.collection.dto.external.MovieExternalDto;
 import movie.collection.mapper.MovieMapper;
 import movie.collection.service.MovieService;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
 @Component
 @PropertySource("classpath:application.properties")
 public class MovieFetcher {
@@ -48,7 +48,7 @@ public class MovieFetcher {
             String body = response.getBody();
             try {
                 List<MovieExternalDto> movies = objectMapper.readValue(body, new TypeReference<List<MovieExternalDto>>() {});
-                movies.stream().map(movieMapper::externalDtoToEntity).forEach(movieService::saveMovieOrUpdateExisting);
+                movies.stream().map(movieMapper::externalDtoToEntity).forEach(movieService::saveOrUpdateMovie);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

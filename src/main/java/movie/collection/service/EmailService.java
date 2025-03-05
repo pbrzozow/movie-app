@@ -1,15 +1,13 @@
 package movie.collection.service;
 
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 //@Service
-public class EmailService {
+public class EmailService implements EmailSender{
 
     private final JavaMailSender mailSender;
 
@@ -17,7 +15,7 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
-    public void sendEmailWithLink(String to, String subject, String link) throws MessagingException {
+    public void sendEmail(String to, String subject, String link) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
