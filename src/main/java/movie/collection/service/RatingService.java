@@ -1,6 +1,8 @@
 package movie.collection.service;
 
 import movie.collection.dto.RatingDto;
+import movie.collection.dto.RatingSummary;
+import movie.collection.exception.RatingNotFoundException;
 import movie.collection.mapper.RatingMapper;
 import movie.collection.model.Movie;
 import movie.collection.model.Rating;
@@ -32,4 +34,9 @@ public class RatingService {
         Rating savedRanking = ratingRepository.save(rating);
         return ratingMapper.entityToDto(savedRanking);
     }
+    protected Rating findRatingById(Long id){
+        return ratingRepository.findRatingById(id).orElseThrow(()->new RatingNotFoundException("Rating with id:" + id + "does not exist! "));
+    }
+
+
 }

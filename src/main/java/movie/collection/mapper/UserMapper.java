@@ -17,10 +17,5 @@ public class UserMapper {
     public UserDto entityToDto(User user){
         return new UserDto(user.getId(),user.getUsername());
     }
-    public User dtoToEntity(UserDto userDto){
-        return userRepository
-                .findUserById(userDto.id())
-                .orElseThrow(()-> new UserNotFoundException("User does not exist"));
-    }
 }
 

@@ -11,25 +11,19 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class MovieScheduler {
     private final MovieFetcher movieFetcher;
-    private final MovieService movieService;
 
-    public MovieScheduler(MovieFetcher movieFetcher, MovieService movieService) {
+    public MovieScheduler(MovieFetcher movieFetcher) {
         this.movieFetcher = movieFetcher;
-        this.movieService = movieService;
     }
 
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(cron = "0 0 0 * * *")
     public void fetchAndSaveMovies(){
-        System.out.println("fetching movies");
-
-//        CompletableFuture<Void> fetchMovies = movieFetcher.fetchMovies();
-//        fetchMovies
-//                .thenRun(() -> System.out.println("Movies fetched and saved"))
-//                .exceptionally(ex -> {
-//                    System.err.println("Error fetching movies: " + ex.getMessage());
-//                    return null;
-//                });
-        movieService.initialize();
-        System.out.println("movies fetched");
+        CompletableFuture<Void> fetchMovies = movieFetcher.fetchMovies();
+        fetchMovies
+                .thenRun(() -> System.out.println("Movies fetched and saved"))
+                .exceptionally(ex -> {
+                    System.err.println("Error fetching movies: " + ex.getMessage());
+                    return null;
+                });
 }
 }

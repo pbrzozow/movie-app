@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
-import lombok.extern.slf4j.Slf4j;
 import movie.collection.dto.external.MovieExternalDto;
 import movie.collection.mapper.MovieMapper;
 import movie.collection.service.MovieService;

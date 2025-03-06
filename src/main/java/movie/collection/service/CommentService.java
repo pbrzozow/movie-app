@@ -1,6 +1,7 @@
 package movie.collection.service;
 
 import movie.collection.dto.CommentDto;
+import movie.collection.exception.CommentNotFoundException;
 import movie.collection.exception.MovieNotFoundException;
 import movie.collection.exception.UserNotFoundException;
 import movie.collection.mapper.CommentMapper;
@@ -42,5 +43,8 @@ public class CommentService {
     @Transactional
     public void deleteComment(Long id) {
         commentRepository.deleteById(id);
+    }
+    protected Comment findCommentById(Long id){
+        return commentRepository.findById(id).orElseThrow(()-> new CommentNotFoundException("Comment with id: "+id +" does not exist!"));
     }
 }

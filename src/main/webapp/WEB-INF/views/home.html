@@ -19,16 +19,16 @@
                 <div class="card-body text-center">
                     <h5 class="card-title" th:text="${movie.title}">Movie Title</h5>
                     <p class="card-text">
-                        <strong>Rating:</strong> <span th:text="${movie.rating}"></span>/5
+                        <strong>Rating:</strong> <span th:text="${movie.rating}">0</span>/5
                     </p>
                     <p class="card-text">
-                        <strong>Watched:</strong> <span th:text="${movie.watchedTimes}"></span> times
+                        <strong>Watched:</strong> <span th:text="${movie.watchedTimes}">0</span> times
                     </p>
                     <p class="card-text">
-                        <strong>Release Year:</strong> <span th:text="${movie.releaseYear}"></span>
+                        <strong>Release Year:</strong> <span th:text="${movie.releaseYear}">None</span>
                     </p>
                     <p class="card-text">
-                        <strong>Duration:</strong> <span th:text="${movie.duration}"></span> min
+                        <strong>Duration:</strong> <span th:text="${movie.duration}">0</span> min
                     </p>
                 </div>
             </div>
