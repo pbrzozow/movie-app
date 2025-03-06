@@ -8,9 +8,6 @@ import movie.collection.model.User;
 import movie.collection.repository.TokenRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 @Service
 public class TokenService {
     private final TokenRepository tokenRepository;
@@ -20,26 +17,19 @@ public class TokenService {
     }
 
     public Token createConfirmationToken(User user) {
-        Token token = generate(user,TokenType.CONFIRMATION);
+        Token token = TokenFactory.generate(user,TokenType.CONFIRMATION);
         return saveToken(token);
     }
     public Token createInvitationToken(User user){
-        Token token = generate(user,TokenType.ADMIN_INVITATION);
+        Token token = TokenFactory.generate(user,TokenType.ADMIN_INVITATION);
         return saveToken(token);
     }
 
-    private Token generate(User user, TokenType tokenType){
-        String tokenId = UUID.randomUUID().toString();
-        Token token = new Token();
-        token.setToken(tokenId);
-        token.setTokenType(tokenType);
-        token.setExpirationTime(LocalDateTime.now().plusHours(24));
-        token.setUser(user);
-        return token;
-    }
+
     private Token saveToken(Token token){
         return tokenRepository.save(token);
     }
+
     public Token getToken(String token, TokenType tokenType) throws TokenNotFoundException, TokenExpiredException {
         Token existingToken = tokenRepository.getByTokenAndTokenType(token, tokenType)
                 .orElseThrow(() -> new TokenNotFoundException("Provided token is invalid! "));
