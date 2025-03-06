@@ -12,12 +12,12 @@ import javax.mail.MessagingException;
 public class AdminInvitationServiceImpl implements AdminInvitationService {
     private final TokenService tokenService;
     private final UserService userService;
-//    private final EmailSender emailSender;
+    private final EmailSender emailSender;
 
-    public AdminInvitationServiceImpl(TokenService tokenService, UserService userService) {
+    public AdminInvitationServiceImpl(TokenService tokenService, UserService userService,EmailSender emailSender) {
         this.tokenService = tokenService;
         this.userService = userService;
-//        this.emailSender = emailSender;
+        this.emailSender = emailSender;
     }
 
 
@@ -27,7 +27,7 @@ public class AdminInvitationServiceImpl implements AdminInvitationService {
         User user = userService.findUserByUsername(username);
         String token = generateInvitationToken(user);
         String invitationLink = getConfirmationLink(token);
-//        emailSender.sendEmail(user.getEmail(),"Admin invitation link. ",invitationLink);
+        emailSender.sendEmail(user.getEmail(),"Admin invitation link. ",invitationLink);
         return invitationLink;
     }
 

@@ -2,11 +2,12 @@ package movie.collection.service;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-//@Service
+@Service
 public class EmailService implements EmailSender{
 
     private final JavaMailSender mailSender;

@@ -21,13 +21,12 @@ public class RegistrationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
-//    private final EmailService emailService;
-
-    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService) {
+    private final EmailSender emailSender;
+    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService, EmailSender emailSender) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
-//        this.emailService = emailService;
+        this.emailSender = emailSender;
     }
 
 
@@ -61,7 +60,7 @@ public class RegistrationService {
         String subject = "Account activation link!";
         String confirmationLink = getConfirmationLink(token);
         System.out.println(confirmationLink);
-//        emailService.sendEmail(email, subject, confirmationLink);
+        emailSender.sendEmail(email, subject, confirmationLink);
 
     }
 
