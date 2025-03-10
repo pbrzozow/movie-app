@@ -16,7 +16,7 @@ public class MovieScheduler {
         this.movieFetcher = movieFetcher;
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 */5 * * * *")
     public void fetchAndSaveMovies(){
         CompletableFuture<Void> fetchMovies = movieFetcher.fetchMovies();
         fetchMovies

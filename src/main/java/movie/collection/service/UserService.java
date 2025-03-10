@@ -46,11 +46,7 @@ public class UserService {
             }
             return user;
         }
-     @PostConstruct
-    public void initAdmin(){
-         User user = User.builder().email("a@a").username("admin").role(Role.ADMIN).password(passwordEncoder.encode("admin123")).isActive(true).build();
-     userRepository.save(user);
-    }
+
     User saveUser(User user){
         return userRepository.save(user);
     }

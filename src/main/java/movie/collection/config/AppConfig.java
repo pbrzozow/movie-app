@@ -21,10 +21,10 @@ public class AppConfig {
     @Bean
     public DataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setJdbcUrl("jdbc:h2:~/test;AUTO_SERVER=TRUE");
-        dataSource.setUsername("usr");
-        dataSource.setPassword("usr");
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setJdbcUrl("jdbc:postgresql://localhost:5432/movie-app");
+        dataSource.setUsername("myusername");
+        dataSource.setPassword("password");
         dataSource.setMaximumPoolSize(10);
         dataSource.setMinimumIdle(5);
         dataSource.setIdleTimeout(30000);
@@ -42,8 +42,8 @@ public class AppConfig {
         emf.setJpaVendorAdapter(vendorAdapter);
 
         Properties properties = new Properties();
-        properties.put("hibernate.hbm2ddl.auto", "create-drop");
-        properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.format_sql", "false");
 

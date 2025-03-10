@@ -20,7 +20,7 @@ public class EmailService implements EmailSender{
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        helper.setFrom("test@example.com");
+        helper.setFrom("no-reply@movie-collection.com");
         helper.setTo(to);
         helper.setSubject(subject);
 
